@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
+// Presentation katmanýna taþýndý. DDD için controller'lar Presentation/Controllers altýna alýnmalý.
 namespace DefineXFinalCase.Controllers
 {
     [ApiController]

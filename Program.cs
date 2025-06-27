@@ -1,4 +1,5 @@
 using DefineXFinalCase;
+using DefineXFinalCase.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

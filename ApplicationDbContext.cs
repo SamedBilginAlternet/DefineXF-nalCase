@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using DefineXFinalCase.Entities;
+using DefineXFinalCase.Domain.Entities;
 
-namespace DefineXFinalCase
+namespace DefineXFinalCase.Infrastructure.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -9,7 +9,7 @@ namespace DefineXFinalCase
 
         public DbSet<User> Users => Set<User>();
         public DbSet<Project> Projects => Set<Project>();
-        public DbSet<DefineXFinalCase.Entities.Task> Tasks => Set<DefineXFinalCase.Entities.Task>();
+        public DbSet<DefineXFinalCase.Domain.Entities.Task> Tasks => Set<DefineXFinalCase.Domain.Entities.Task>();
         public DbSet<TaskComment> TaskComments => Set<TaskComment>();
         public DbSet<TaskAttachment> TaskAttachments => Set<TaskAttachment>();
 

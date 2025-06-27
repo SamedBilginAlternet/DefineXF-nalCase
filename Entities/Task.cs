@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace DefineXFinalCase.Entities
+namespace DefineXFinalCase.Domain.Entities
 {
     public class Task
     {
