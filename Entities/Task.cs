@@ -1,15 +1,21 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace DefineXFinalCase.Domain.Entities
 {
     public class Task
     {
         public int Id { get; set; }
+        [Required, StringLength(100)]
         public string Title { get; set; } = null!;
+        [Required, StringLength(500)]
         public string Description { get; set; } = null!; // User story
+        [Required, StringLength(500)]
         public string AcceptanceCriteria { get; set; } = null!;
+        [Required]
         public string State { get; set; } = "Backlog"; // Backlog, In Analysis, In Development, Blocked, Cancelled, Completed
+        [Required]
         public string Priority { get; set; } = "Medium"; // Critical, High, Medium, Low
         public int? AssignedUserId { get; set; }
         public User? AssignedUser { get; set; }

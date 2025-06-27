@@ -38,6 +38,11 @@ namespace DefineXFinalCase.Controllers
         [HttpPost]
         public async Task<ActionResult<Response<Project>>> CreateProject(Project project)
         {
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return BadRequest(new Response<Project>("Validation error", errors));
+            }
             _context.Projects.Add(project);
             await _context.SaveChangesAsync();
             return CreatedAtAction(nameof(GetProject), new { id = project.Id }, new Response<Project>(project));
@@ -48,6 +53,11 @@ namespace DefineXFinalCase.Controllers
         {
             if (id != project.Id)
                 return BadRequest(new Response<Project>("Id mismatch"));
+            if (!ModelState.IsValid)
+            {
+                var errors = ModelState.Values.SelectMany(v => v.Errors).Select(e => e.ErrorMessage).ToList();
+                return BadRequest(new Response<Project>("Validation error", errors));
+            }
             _context.Entry(project).State = EntityState.Modified;
             try
             {
