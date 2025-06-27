@@ -3,6 +3,7 @@ using DefineXFinalCase.Infrastructure.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using DefineXFinalCase;
+using Microsoft.AspNetCore.Authorization;
 
 namespace DefineXFinalCase.Controllers
 {
@@ -17,6 +18,7 @@ namespace DefineXFinalCase.Controllers
         }
 
         [HttpGet]
+        [Authorize]
         public async Task<ActionResult<Response<IEnumerable<User>>>> GetUsers()
         {
             var users = await _context.Users.ToListAsync();
@@ -24,6 +26,7 @@ namespace DefineXFinalCase.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<Response<User>>> GetUser(int id)
         {
             var user = await _context.Users.Include(u => u.Projects).Include(u => u.AssignedTasks)
@@ -34,6 +37,7 @@ namespace DefineXFinalCase.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<Response<User>>> CreateUser(User user)
         {
             _context.Users.Add(user);
@@ -42,6 +46,7 @@ namespace DefineXFinalCase.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public async Task<IActionResult> UpdateUser(int id, User user)
         {
             if (id != user.Id)
@@ -61,6 +66,7 @@ namespace DefineXFinalCase.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize]
         public async Task<IActionResult> DeleteUser(int id)
         {
             var user = await _context.Users.FindAsync(id);
