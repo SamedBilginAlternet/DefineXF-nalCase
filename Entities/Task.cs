@@ -17,8 +17,7 @@ namespace DefineXFinalCase.Domain.Entities
         public string State { get; set; } = "Backlog"; // Backlog, In Analysis, In Development, Blocked, Cancelled, Completed
         [Required]
         public string Priority { get; set; } = "Medium"; // Critical, High, Medium, Low
-        public int? AssignedUserId { get; set; }
-        public User? AssignedUser { get; set; }
+        public ICollection<User> AssignedUsers { get; set; } = new List<User>();
         public int ProjectId { get; set; }
         public Project Project { get; set; } = null!;
         public ICollection<TaskComment> Comments { get; set; } = new List<TaskComment>();
