@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-// Domain katmanýna taþýndý. DDD için Entities klasörü Domain/Entities olarak yeniden adlandýrýlmalý ve entity'ler burada tutulmalý.
 namespace DefineXFinalCase.Domain.Entities
 {
     public class User
