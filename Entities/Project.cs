@@ -5,7 +5,7 @@ namespace DefineXFinalCase.Domain.Entities
 {
     public class Project
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         [Required, StringLength(100)]
         public string Title { get; set; } = null!;
         [Required, StringLength(500)]

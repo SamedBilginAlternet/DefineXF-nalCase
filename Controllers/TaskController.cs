@@ -40,10 +40,11 @@ public class TaskController : ControllerBase
     [Authorize]
     public async Task<IActionResult> UpdateTask(int id, [FromBody] TaskEntity updatedTask)
     {
+        // Update the comparison to match the correct types (Guid instead of int)
         var existingTask = await _context.Tasks
             .Include(t => t.Attachments)
             .Include(t => t.Comments)
-            .FirstOrDefaultAsync(t => t.Id == id);
+            .FirstOrDefaultAsync(t => t.Id == new Guid(id.ToString()));
 
         if (existingTask == null)
             return NotFound();

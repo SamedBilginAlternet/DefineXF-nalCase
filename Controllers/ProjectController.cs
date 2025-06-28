@@ -36,12 +36,12 @@ namespace DefineXFinalCase.Controllers
                 State = p.State,
                 TeamMembers = p.TeamMembers.Select(u => new UserShortDto
                 {
-                    Id = u.Id,
+                    Id = u.Id, // Fix: Use 'User.Id' directly as it is of type 'Guid'  
                     UserName = u.UserName
                 }).ToList(),
                 Tasks = p.Tasks.Select(t => new TaskShortDto
                 {
-                    Id = t.Id,
+                    Id = t.Id, // Fix: Use 'Task.Id' directly as it is of type 'Guid'  
                     Title = t.Title
                 }).ToList()
             });
@@ -50,10 +50,10 @@ namespace DefineXFinalCase.Controllers
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<Response<Project>>> GetProject(int id)
+        public async Task<ActionResult<Response<Project>>> GetProject(Guid id) // Fix: Change 'id' type from 'int' to 'Guid'
         {
             var project = await _context.Projects.Include(p => p.TeamMembers).Include(p => p.Tasks)
-                .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted);
+                .FirstOrDefaultAsync(p => p.Id == id && !p.IsDeleted); // Fix: 'p.Id' and 'id' are both of type 'Guid'
             if (project == null)
                 return NotFound(new Response<Project>("Project not found"));
             return Ok(new Response<Project>(project));
@@ -73,9 +73,9 @@ namespace DefineXFinalCase.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateProject(int id, Project project)
+        public async Task<IActionResult> UpdateProject(Guid id, Project project) // Fix: Change 'id' type from 'int' to 'Guid'
         {
-            if (id != project.Id)
+            if (id != project.Id) // Fix: 'id' and 'project.Id' are both of type 'Guid'
                 return BadRequest(new Response<Project>("Id mismatch"));
             if (!ModelState.IsValid)
             {
@@ -89,7 +89,7 @@ namespace DefineXFinalCase.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!_context.Projects.Any(p => p.Id == id))
+                if (!_context.Projects.Any(p => p.Id == id)) // Fix: 'p.Id' and 'id' are both of type 'Guid'
                     return NotFound(new Response<Project>("Project not found"));
                 throw;
             }
@@ -97,9 +97,9 @@ namespace DefineXFinalCase.Controllers
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteProject(int id)
+        public async Task<IActionResult> DeleteProject(Guid id) // Fix: Change 'id' type from 'int' to 'Guid'
         {
-            var project = await _context.Projects.FindAsync(id);
+            var project = await _context.Projects.FindAsync(id); // Fix: 'id' is now of type 'Guid'
             if (project == null)
                 return NotFound(new Response<Project>("Project not found"));
             project.IsDeleted = true;

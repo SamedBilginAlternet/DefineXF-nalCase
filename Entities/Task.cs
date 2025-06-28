@@ -7,7 +7,7 @@ namespace DefineXFinalCase.Domain.Entities
 {
     public class Task
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
 
         [Required, StringLength(100)]
         public string Title { get; set; } = null!;
@@ -24,12 +24,12 @@ namespace DefineXFinalCase.Domain.Entities
         [Required]
         public TaskPriority Priority { get; set; } = TaskPriority.Medium;
 
-        public int? AssignedUserId { get; set; }
+        public Guid? AssignedUserId { get; set; }
         public User? AssignedUser { get; set; }
 
         public ICollection<User> AssignedUsers { get; set; } = new List<User>();
 
-        public int ProjectId { get; set; }
+        public Guid ProjectId { get; set; }
         public Project Project { get; set; } = null!;
 
         public ICollection<TaskComment> Comments { get; set; } = new List<TaskComment>();
@@ -45,20 +45,20 @@ namespace DefineXFinalCase.Domain.Entities
 
     public class TaskComment
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Comment { get; set; } = null!;
         public DateTime CreatedAt { get; set; } = DateTime.UtcNow;
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; } = null!;
     }
 
     public class TaskAttachment
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string FileName { get; set; } = null!;
         public string FilePath { get; set; } = null!;
         public DateTime UploadedAt { get; set; } = DateTime.UtcNow;
-        public int UserId { get; set; }
+        public Guid UserId { get; set; }
         public User User { get; set; } = null!;
     }
 }

@@ -27,10 +27,10 @@ namespace DefineXFinalCase.Controllers
 
         [HttpGet("{id}")]
         [Authorize]
-        public async Task<ActionResult<Response<User>>> GetUser(int id)
+        public async Task<ActionResult<Response<User>>> GetUser(Guid id) // Change parameter type from int to Guid
         {
             var user = await _context.Users.Include(u => u.Projects).Include(u => u.AssignedTasks)
-                .FirstOrDefaultAsync(u => u.Id == id);
+                .FirstOrDefaultAsync(u => u.Id == id); // No changes needed here as 'Id' is of type Guid
             if (user == null)
                 return NotFound(new Response<User>("User not found"));
             return Ok(new Response<User>(user));
@@ -47,7 +47,7 @@ namespace DefineXFinalCase.Controllers
 
         [HttpPut("{id}")]
         [Authorize]
-        public async Task<IActionResult> UpdateUser(int id, User user)
+        public async Task<IActionResult> UpdateUser(Guid id, User user)
         {
             if (id != user.Id)
                 return BadRequest(new Response<User>("Id mismatch"));
@@ -67,7 +67,7 @@ namespace DefineXFinalCase.Controllers
 
         [HttpDelete("{id}")]
         [Authorize]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(Guid id)
         {
             var user = await _context.Users.FindAsync(id);
             if (user == null)
