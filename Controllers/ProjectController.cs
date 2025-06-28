@@ -19,10 +19,34 @@ namespace DefineXFinalCase.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<Response<IEnumerable<Project>>>> GetProjects()
+        public async Task<ActionResult<Response<IEnumerable<ProjectDto>>>> GetProjects()
         {
-            var projects = await _context.Projects.Where(p => !p.IsDeleted).ToListAsync();
-            return Ok(new Response<IEnumerable<Project>>(projects));
+            var projects = await _context.Projects
+                .Include(p => p.TeamMembers)
+                .Include(p => p.Tasks)
+                .Where(p => !p.IsDeleted)
+                .ToListAsync();
+
+            var projectDtos = projects.Select(p => new ProjectDto
+            {
+                Id = p.Id,
+                Title = p.Title,
+                Description = p.Description,
+                Department = p.Department,
+                State = p.State,
+                TeamMembers = p.TeamMembers.Select(u => new UserShortDto
+                {
+                    Id = u.Id,
+                    UserName = u.UserName
+                }).ToList(),
+                Tasks = p.Tasks.Select(t => new TaskShortDto
+                {
+                    Id = t.Id,
+                    Title = t.Title
+                }).ToList()
+            });
+
+            return Ok(new Response<IEnumerable<ProjectDto>>(projectDtos));
         }
 
         [HttpGet("{id}")]

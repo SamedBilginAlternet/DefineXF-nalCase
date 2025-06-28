@@ -24,7 +24,14 @@ namespace DefineXFinalCase.Infrastructure.Data
                 .WithMany(u => u.AssignedTasks)
                 .UsingEntity(j => j.ToTable("TaskAssignedUsers"));
 
-            // Soft delete global filter örneði (isteðe baðlý)
+            // Task <-> User one-to-many (AssignedUser)
+            modelBuilder.Entity<TaskEntity>()
+                .HasOne(t => t.AssignedUser)
+                .WithMany()
+                .HasForeignKey(t => t.AssignedUserId)
+                .OnDelete(DeleteBehavior.SetNull);
+
+            // Soft delete global filter
             modelBuilder.Entity<Project>().HasQueryFilter(p => !p.IsDeleted);
             modelBuilder.Entity<TaskEntity>().HasQueryFilter(t => !t.IsDeleted);
         }
